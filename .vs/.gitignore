@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ignore OS-specific files
 AppData/
 .lesshst
@@ -5,3 +6,29 @@ AppData/
 *.log
 # Ignore all AppData content
 AppData/
+=======
+# Ignore .NET binaries
+.dotnet/
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore personal git configuration
+.gitconfig
+
+# Ignore Windows user settings
+NTUSER.DAT*
+
+# Ignore OneDrive directory
+OneDrive/
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+temp/
+tmp/
+>>>>>>> 60c954a598ac49096141c26e5517fd8dd2995b75
