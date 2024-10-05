@@ -1,5 +1,7 @@
-.dotnet/
+# Ignore OS-specific files
+AppData/
+.lesshst
 .vscode/
-.gitconfig
-NTUSER.DAT*
-OneDrive/
+*.log
+# Ignore all AppData content
+AppData/
