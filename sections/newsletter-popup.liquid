@@ -1,0 +1,281 @@
+{% if section.settings.enable_news_pop_up %}
+<style>
+    .newsletter-popup {
+      background-color: {{ section.settings.background_color }} !important;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      transition: 1s;
+      -webkit-animation: fade-in 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+      animation: fade-in 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    }
+  @-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+    .popup-close svg{
+      width: 15px;
+    height: 15px;
+    margin-right: 5px;
+      color: {{ section.settings.pop_close_color }} !important;
+    }
+    .popup-title {
+      color: {{ section.settings.title_color }} !important;
+      margin: 0;
+      font-size: 20px;
+    font-weight: bold;
+    }
+  .newsletter-popup-content{
+    padding: 20px;
+  }
+    .popup-subtitle {
+      color: {{ section.settings.subtitle_color }} !important;
+      margin-top: 11px;
+      margin-bottom: 17px;
+    }
+    #submit-button {
+      background-color: {{ section.settings.button_bg_color }};
+      color: {{ section.settings.button_text_color }};
+      padding: 9px 16px;
+      cursor: pointer;
+    }
+
+    #submit-button {
+    margin-top: 10px;
+    width: 100%;
+    }
+    .popupinput {
+    width: 100%;
+    }
+    
+  .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); 
+        z-index: 998; 
+        display: none; 
+    }
+    
+    .popup-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+      color: {{ section.settings.text_color }};
+    }
+
+    .popupinput{
+      border-top: none !important;
+      border-left: none !important;
+      border-right: none !important;
+      border-radius: 0 !important;
+    }
+
+  .photocont{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .photocont img{
+    max-width: {{ section.settings.photowidthpc }}px;
+  }
+
+  .input_for_border{
+    border-bottom: 1px solid {{ section.settings.title_color }} !important;
+    background: none !important;
+    color: {{ section.settings.title_color }} !important;
+  }
+  
+  @media screen and (max-width: 600px){
+  .photocont img{
+    max-width: {{ section.settings.photowidthmobile }}px;
+  }
+  }
+
+  input {
+    -webkit-appearance: none;
+}
+  </style>
+
+<div class="popup-overlay" id="popup-overlay"></div>
+<div id="newsletter-popup" class="newsletter-popup" style="display: none;">
+    <div class="popup-close" id="popup-close">{% render 'icon-close' %}</div> 
+  {% if section.settings.enable_pop_photo %}
+  <div class="photocont">
+    <img  src="{{ section.settings.pop_photo | img_url: 'master' }}">
+  </div>
+  {% endif %}
+    <div class="newsletter-popup-content">
+        <h3 class="popup-title">{{ section.settings.popup_title }}</h3>
+        <p class="popup-subtitle">{{ section.settings.popup_subtitle }}</p>
+        <form action="/contact#contact_form" method="post">
+            <input class="popupinput input_for_border" style="padding: 9px; padding-left: 0; padding-right: 69px; font-size: 14px;" type="email" name="contact[email]" placeholder="Your email" />
+            <input  type="hidden" name="form_type" value="customer" />
+            <button class="popupinput" id="submit-button" style="letter-spacing: 0.05rem;" type="submit">{{ section.settings.button_text }}</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const popupOverlay = document.getElementById('popup-overlay');
+    const popup = document.getElementById('newsletter-popup');
+    const popupClose = document.getElementById('popup-close');
+
+    const hasShownPopup = sessionStorage.getItem('hasShownPopup');
+    const popupDelay = parseInt('{{ section.settings.popup_delay }}') * 1000; 
+
+    const emailInput = document.querySelector('input[name="contact[email]"]');
+    const emailSubmitted = sessionStorage.getItem('emailSubmitted');
+
+    if (!hasShownPopup && !emailSubmitted && (!emailInput || !emailInput.value)) {
+        setTimeout(function () {
+            popupOverlay.style.display = 'block';
+            popup.style.display = 'block';
+        }, popupDelay);
+
+        popupClose.addEventListener('click', function () {
+            popupOverlay.style.display = 'none';
+            popup.style.display = 'none';
+            sessionStorage.setItem('hasShownPopup', 'true');
+        });
+        popupOverlay.addEventListener('click', function () {
+            popupOverlay.style.display = 'none';
+            popup.style.display = 'none';
+            sessionStorage.setItem('hasShownPopup', 'true');
+        });
+    }
+
+    const form = document.querySelector('form[action="/contact#contact_form"]');
+    form.addEventListener('submit', function () {
+        sessionStorage.setItem('emailSubmitted', 'true');
+    });
+});
+</script>
+{% endif %}
+
+
+
+{% schema %}
+{
+  "name": "Newsletter Popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_news_pop_up",
+      "label": "Enable Newsletter Popup",
+      "default": false
+    },
+    {
+      "type": "color",
+      "label": "Background Color",
+      "id": "background_color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "label": "Close icon color",
+      "id": "pop_close_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "label": "Title Color",
+      "id": "title_color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "label": "Subtitle Color",
+      "id": "subtitle_color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "label": "Button Background Color",
+      "id": "button_bg_color",
+      "default": "#ff0000"
+    },
+    {
+      "type": "color",
+      "label": "Button Text Color",
+      "id": "button_text_color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "label": "Popup Title",
+      "id": "popup_title",
+      "default": "Subscribe to Our Newsletter"
+    },
+    {
+      "type": "text",
+      "label": "Popup Subtitle",
+      "id": "popup_subtitle",
+      "default": "Get updates and special offers"
+    },
+    {
+      "type": "text",
+      "label": "Button Text",
+      "id": "button_text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "range",
+      "label": "Popup Delay (seconds)",
+      "id": "popup_delay",
+      "min": 0,
+      "max": 30, 
+      "default": 5 
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_pop_photo",
+      "label": "Enable Photo",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "pop_photo",
+      "label": "Image/Gif"
+    },
+    {
+      "type": "range",
+      "id": "photowidthpc",
+      "label": "Image Width PC",
+      "min": 30,
+      "max": 500,
+      "step": 10,
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "photowidthmobile",
+      "label": "Image Width Mobile",
+      "min": 30,
+      "max": 400,
+      "step": 10,
+      "default": 300
+    }
+  ]
+}
+{% endschema %}

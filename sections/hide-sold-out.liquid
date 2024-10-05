@@ -1,0 +1,171 @@
+{% if section.settings.enable_hide_sold_out %}
+<h2 class="hide-sold-out-text" style="font-size: {{ section.settings.hide_font_size }}px;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    text-align: center;">HIDE SOLD OUT ITEMS</h2>
+<div style="display: flex;
+    justify-content: center;">
+<label class="toggleSwitch">
+  <input type="checkbox" id="toggleSoldOut">
+  <span class="slider"></span>
+</label>
+</div>
+{% endif %}
+<script>
+  var showSoldOut = false; 
+
+  document.getElementById("toggleSoldOut").addEventListener("change", function () {
+    var productItems = document.getElementsByClassName("grid__item");
+    for (var i = 0; i < productItems.length; i++) {
+      var soldOutText = "{{ 'products.product.sold_out' | t }}";
+      var productTitle = productItems[i].querySelector(".badge");
+      
+      if (productTitle && productTitle.textContent.trim() === soldOutText) {
+        if (this.checked) {
+          productItems[i].classList.add("hidden"); 
+        } else {
+          productItems[i].classList.remove("hidden"); 
+        }
+      }
+    }
+
+    showSoldOut = this.checked; 
+  });
+
+  document.getElementById("toggleSoldOut").checked = showSoldOut;
+
+  var productItems = document.getElementsByClassName("ProductItem");
+  for (var i = 0; i < productItems.length; i++) {
+    var soldOutText = "{{ 'products.product.sold_out' | t }}";
+    var productTitle = productItems[i].querySelector(".badge");
+    
+    if (productTitle && productTitle.textContent.trim() === soldOutText) {
+      if (showSoldOut) {
+        productItems[i].classList.add("hidden");
+      } else {
+        productItems[i].classList.remove("hidden");
+      }
+    }
+  }
+</script>
+
+
+<!-- Стили для переключателя -->
+<style>
+  .toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 53px;
+    height: 26px;
+  }
+
+  .toggleSwitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: {{ section.settings.bg_slider_off }};
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: {{ section.settings.color_slider_off }};
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: {{ section.settings.bg_slider_on }};
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #000000;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    background-color: {{ section.settings.color_slider_on }};
+  }
+  .hidden {
+    display: none;
+  }
+
+  @media screen and (max-width: 450px){
+    .toggleSwitch {
+    width: 53px;
+    height: 26px;
+  }
+    .slider:before {
+    height: 18px;
+    width: 18px;
+
+}
+  }
+
+</style>
+
+{% schema %}
+  {
+    "name": "Hide Sold-out Switch",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_hide_sold_out",
+        "label": "Enable Hide Sold Out Switch",
+        "info": "Customer will be able to hide sold out items",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "bg_slider_off",
+        "label": "Switch Background Off",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_slider_off",
+        "label": "Switch Color Off",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "bg_slider_on",
+        "label": "Switch Background On",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_slider_on",
+        "label": "Switch Color On",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "range",
+        "id": "hide_font_size",
+        "label": "Text size",
+        "min": 7,
+        "max": 45,
+        "default": 13
+      }
+    ]
+  }
+{% endschema %}

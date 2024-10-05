@@ -1,0 +1,157 @@
+<style>
+  .block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 85px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .vertical-line {
+    width: 3px;
+    height: 120px;
+    display: block !important;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+
+   .vertical-line::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: {{ section.settings.finished_color }};
+    top: -100%;
+    animation: moveDown 3s linear infinite;
+  }
+@keyframes moveDown {
+    0% {
+      top: -100%;
+    }
+    100% {
+      top: 100%;
+    }
+  }
+
+  .vert_title{
+    font-size: {{ section.settings.vert_title_size }}px;
+    margin: 0 !important;
+  }
+  .vert_date{
+    font-size: {{ section.settings.vert_date_size }}px;
+    margin: 6px !important;
+  }
+  .vert_desc{
+    font-size: {{ section.settings.vert_desc_size }}px;
+    margin: 0 !important;
+  }
+</style>
+
+{% for block in section.blocks %}
+<div class="block">
+  <div class="vertical-line" style="background-color: {% if block.settings.status == 'in_process_color' %}{{ section.settings.in_process_color }}{% else %}{{ section.settings.finished_color }}{% endif %};"></div>
+  <h1 class="vert_title">{{ block.settings.heading1 }}</h1>
+  <p class="vert_date">{{ block.settings.paragraph1 }}</p>
+  <h1 class="vert_desc">{{ block.settings.heading2 }}</h1>
+</div>
+{% endfor %}
+
+
+
+{% schema %}
+{
+  "name": "Pre-order Tracking",
+  "settings": [
+    {
+      "type": "color",
+      "id": "in_process_color",
+      "label": "In Process Line Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "finished_color",
+      "label": "Finished Line Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "vert_title_size",
+      "label": "Title Text Size",
+      "min": 7,
+      "max": 45,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "vert_date_size",
+      "label": "Date Text Size",
+      "min": 7,
+      "max": 45,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "vert_desc_size",
+      "label": "Info Text Size",
+      "min": 7,
+      "max": 45,
+      "step": 1,
+      "default": 18
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Status",
+      "settings": [
+        {
+          "type": "select",
+          "label": "Status",
+          "id": "status",
+          "default": "in_process_color",
+          "options": [
+            {
+              "value": "in_process_color",
+              "label": "In Process"
+            },
+            {
+              "value": "finished_color",
+              "label": "Finished"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Title",
+          "id": "heading1",
+          "default": "PRE ORDER LIVE"
+        },
+        {
+          "type": "textarea",
+          "label": "Date",
+          "id": "paragraph1",
+          "default": "01/01/2023"
+        },
+        {
+          "type": "text",
+          "label": "Info",
+          "id": "heading2",
+          "default": "PRE ORDER WILL BE LIVE FOR 20 DAYS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Section",
+      "category": "Custom Sections"
+    }
+  ]
+}
+
+{% endschema %}

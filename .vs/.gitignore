@@ -1,0 +1,5 @@
+.dotnet/
+.vscode/
+.gitconfig
+NTUSER.DAT*
+OneDrive/

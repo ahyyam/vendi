@@ -1,0 +1,207 @@
+{% if section.settings.running_text != blank and section.settings.show_runningtext %}
+  <section class="running-text" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }}">
+    <div class="running-text-container">
+      <div class="running-text-content">
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+        <span class="runline"></span>
+        <span>{{ section.settings.running_text }}</span>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<style>
+  .running-text {
+    background-color: {{ section.settings.background_color }};
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .running-text-container {
+    display: flex;
+    animation: marquee 40s linear infinite;
+  }
+
+  .running-text-content {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .running-text-content span {
+    margin-right: 30px; 
+    color: {{ section.settings.run_text_color }} !important;
+    font-size: {{ section.settings.runningfont_size }}px;
+    text-transform: {{ section.settings.runningfont_transform }}
+  }
+
+.running-text-content span.runline{
+    width: 2px;
+    height: 10px;
+    background: {{ section.settings.run_line_color }} !important;
+}
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%); 
+    }
+    100% {
+      transform: translateX(-100%); 
+    }
+  }
+
+  @media screen and (max-width: 500px){
+      .running-text-content span {
+    margin-right: 20px; 
+  }
+      .running-text-container {
+    display: flex;
+    animation: marquee 12s linear infinite;
+  }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Running Text",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_runningtext",
+        "label": "Show Running Text",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "running_text",
+        "label": "Running Text",
+        "default": "Welcome to our website"
+      },
+      {
+        "type": "color",
+        "id": "run_text_color",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "run_line_color",
+        "label": "Separator Line Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "runningfont_size",
+        "label": "Text Size",
+        "default": 12,
+        "min": 7,
+        "max": 30,
+        "step": 1
+      },
+      {
+        "type": "select",
+        "id": "runningfont_transform",
+        "label": "Text Transform",
+        "default": "uppercase",
+        "options": [
+          {
+            "value": "uppercase",
+            "label": "Uppercase"
+          },
+          {
+            "value": "lowercase",
+            "label": "Lowercase"
+          },
+          {
+            "value": "capitalize",
+            "label": "Capitalize"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

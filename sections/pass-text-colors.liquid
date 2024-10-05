@@ -1,0 +1,65 @@
+<style>
+  html, body{
+    color: {{ section.settings.password_text_color }} !important;
+  }
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .newsletter__wrapper, .field__input, p, .p, .underlined-link, svg, label, span, .icon-padlock{
+    color: {{ section.settings.password_text_color }} !important;
+  }
+  .icon-padlock{
+    fill: {{ section.settings.password_text_color }} !important;
+  }
+
+  button#Subscribe, .password-button{
+    color: {{ section.settings.sub_button_color }};
+    background: {{ section.settings.sub_button_bg_color }};
+  }
+  .password-modal__content {
+    background-color: {{ section.settings.pass_modal_bg_color }} !important;
+    }
+</style>
+
+{% schema %}
+  {
+    "name": "Text Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "password_text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Subscribe button"
+      },
+      {
+        "type": "color",
+        "id": "sub_button_color",
+        "label": "Subscribe Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "sub_button_bg_color",
+        "label": "Subscribe Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "Password Popup Modal"
+      },
+      {
+        "type": "color",
+        "id": "pass_modal_bg_color",
+        "label": "Popup Background Color",
+        "default": "#000000"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
