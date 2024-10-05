@@ -1,5 +1,24 @@
+# Ignore .NET binaries
 .dotnet/
+
+# Ignore Visual Studio Code settings
 .vscode/
+
+# Ignore personal git configuration
 .gitconfig
+
+# Ignore Windows user settings
 NTUSER.DAT*
+
+# Ignore OneDrive directory
 OneDrive/
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+temp/
+tmp/
